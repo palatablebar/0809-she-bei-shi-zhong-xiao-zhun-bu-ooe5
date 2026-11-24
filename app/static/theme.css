@@ -6,7 +6,7 @@
   color-scheme:dark; }
 * {box-sizing:border-box} [hidden] {display:none!important}
 body.scope {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.55 var(--font-ui)}
-.scope .desk {display:grid;grid-template-areas:"mast mast" "stages source" "kpis chart" "results chart" "results inspection" "archive archive" "statusbar statusbar";grid-template-columns:1.35fr 1fr;gap:var(--gap);margin:auto;padding:clamp(14px,3vw,42px);max-width:1594px}
+.scope .desk {display:grid;grid-template-areas:"mast mast" "stages source" "kpis chart" "baseline chart" "results chart" "results inspection" "archive archive" "statusbar statusbar";grid-template-columns:1.35fr 1fr;gap:var(--gap);margin:auto;padding:clamp(14px,3vw,42px);max-width:1594px}
 .scope .mast {grid-area:mast;background:var(--surface);padding:var(--pad);min-width:0}
 .scope .mast h1 {font:700 clamp(26px,4vw,73px)/1.1 var(--font-display);margin:0;overflow-wrap:anywhere}
 .scope .role {color:var(--accent);margin:0 0 13px;font-weight:700}
@@ -24,7 +24,7 @@ body.scope {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.55
 .scope .metric {background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad);display:grid;align-content:center}
 .scope .metric strong {font:600 clamp(22px,4vw,58px)/1.05 var(--font-num);font-variant-numeric:tabular-nums}
 .scope .panel {background:var(--surface);padding:var(--pad);min-width:0;border:1px solid var(--line);border-radius:var(--radius)}
-.scope .results {grid-area:results} .scope .chart {grid-area:chart} .scope .inspection {grid-area:inspection} .scope .archive {grid-area:archive}
+.scope .results {grid-area:results} .scope .chart {grid-area:chart} .scope .baseline {grid-area:baseline} .scope .inspection {grid-area:inspection} .scope .archive {grid-area:archive}
 .scope h2 {font-size:19px;margin:0 0 10px} .scope .panel-head {display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
 .scope #counts,.scope #run-status {color:var(--sub);overflow-wrap:anywhere}
 .scope .scroll {overflow:auto;max-height:330px}
@@ -35,6 +35,12 @@ body.scope {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.55
 .scope #detail {margin:0;max-height:230px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font: .91em/1.5 var(--font-num)}
 .scope #history {list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:var(--gap);margin:0} .scope #history li {display:flex;align-items:center}
 .scope #review {margin-top:14px;max-width:580px} .scope textarea {display:block;width:100%;min-height:54px;cursor:text}
+.scope .baseline-list {display:flex;flex-wrap:wrap;gap:2px 21px;margin:0 0 12px}
+.scope .baseline-list div {display:flex;gap:7px;align-items:baseline}
+.scope .baseline-list dt {color:var(--sub)} .scope .baseline-list dd {margin:0;font-family:var(--font-num)}
+.scope .baseline h3 {font-size:14px;margin:0 0 7px;color:var(--sub);font-weight:600}
+.scope #changes {min-width:420px}
+.scope #baseline-state:is([data-result="READY"]) {color:var(--accent)} .scope #baseline-state:is([data-result="MISMATCH"]) {color:var(--alert)}
 .scope .review-actions {display:flex;gap:6px;margin:8px 0}
 .scope .statusbar {grid-area:statusbar;display:flex;gap:14px;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0}
 .scope [data-failure="true"] {color:var(--alert)}
@@ -42,8 +48,8 @@ body.scope {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.55
 .scope .mast {letter-spacing:.06em}
 .scope .badge:before {content:"◆ ";color:var(--accent)}
 .scope .chart {outline:1px dashed var(--accent);outline-offset:-6px}
-@media(max-width:1120px) { .scope .desk {grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"mast mast" "source source" "stages stages" "kpis kpis" "results results" "chart inspection" "archive archive" "statusbar statusbar"} }
-@media(max-width:630px) { .scope .desk {grid-template-columns:minmax(0,1fr);grid-template-areas:"mast" "source" "stages" "kpis" "chart" "results" "inspection" "archive" "statusbar"} .scope .kpis {grid-template-columns:repeat(2,minmax(0,1fr))} .scope .chart #visual {display:block!important} .scope .stages button {width:auto} }
+@media(max-width:1120px) { .scope .desk {grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"mast mast" "source source" "stages stages" "kpis kpis" "baseline baseline" "results results" "chart inspection" "archive archive" "statusbar statusbar"} }
+@media(max-width:630px) { .scope .desk {grid-template-columns:minmax(0,1fr);grid-template-areas:"mast" "source" "stages" "kpis" "baseline" "chart" "results" "inspection" "archive" "statusbar"} .scope .kpis {grid-template-columns:repeat(2,minmax(0,1fr))} .scope .chart #visual {display:block!important} .scope .stages button {width:auto} }
 @media print { .scope .source,.scope .stages,.scope .archive,.scope .statusbar {display:none} .scope .desk {display:block} }
 
 .mark-piece {background:var(--accent);color:var(--surface);min-width:0}

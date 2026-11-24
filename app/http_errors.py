@@ -13,6 +13,7 @@ LABELS = {
     "RUN_NOT_FOUND": "批次不存在",
     "REVIEW_FIELDS": "请填写 3 至 200 字复核意见",
     "STALE_REVIEW": "批次已更新，请刷新",
+    "STALE_RELEASE": "校准版本已切换，请刷新",
     "RUN_FINALIZED": "批次已签发",
     "UNRESOLVED_ISSUES": "存在待处理差异",
     "SAMPLE_UNKNOWN": "样例不存在",
@@ -27,7 +28,13 @@ def response(error):
         if code in {"RUN_NOT_FOUND", "SAMPLE_UNKNOWN", "STAGE_UNKNOWN"}
         else (
             409
-            if code in {"STALE_REVIEW", "RUN_FINALIZED", "UNRESOLVED_ISSUES"}
+            if code
+            in {
+                "STALE_REVIEW",
+                "STALE_RELEASE",
+                "RUN_FINALIZED",
+                "UNRESOLVED_ISSUES",
+            }
             else 413 if code == "FILE_TOO_LARGE" else 422
         )
     )

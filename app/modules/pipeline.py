@@ -1,5 +1,7 @@
 from app.business import DomainIssue
 from app.intake.service import inspect
+from app.modules import baseline
+from app.modules import reading
 from app.modules.calculate import compute
 from app.modules.grouping import case_groups
 from app.modules.policy import policy
@@ -13,6 +15,11 @@ def evaluate(rows, stage):
         "records": [r["record"] for r in rows],
         "status": "READY",
     }
+    # 基准身份与读数记录键先记下：即使后续校核失败，交接时也能指认
+    # 这一组依据哪一版基准、对应哪条读数。
+    case["baseline"] = baseline.summary(baseline.anchors(rows))
+    case["reading"] = reading.record(rows)
+    case["reading_source"] = reading.source(rows)
     try:
         case["prep"], payload = prepare(rows)
         if stage >= 3:

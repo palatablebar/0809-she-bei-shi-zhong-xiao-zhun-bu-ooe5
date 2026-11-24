@@ -13,6 +13,7 @@
 | M5 运行对账 | 对照输入、采信和隔离行 | `POST /api/stages/balance` | `app/modules/reconcile.py` | `tests/test_reconcile.py` |
 | M6 批次复核 | 执行批次并签发或暂缓 | `POST /api/runs、PATCH /api/runs/<id>` | `app/review/service.py` | `tests/test_review.py` |
 | M7 证据交付 | 下载复核清单 | `GET /api/runs/<id>/evidence` | `app/evidence/render.py` | `tests/test_evidence.py` |
+| M8 基准换版 | 基准身份、冻结签发读数、切版本 | `GET /api/releases`、`PATCH /api/runs/<id>` | `app/modules/baseline.py`、`app/modules/release.py`、`app/review/store.py` | `tests/test_release.py` |
 
 ## 输入陷阱
 
@@ -29,6 +30,12 @@
 | TRAP-16 | 引号未闭合时拒收文件 | `app/intake/reader.py` | `tests/test_intake.py::test_unclosed_quote_invalidates_source` |
 | TRAP-18 | 区分空文件、全空白和仅表头 | `app/intake/reader.py` | `tests/test_intake.py::test_empty_states_have_distinct_causes` |
 | TRAP-26 | 拒绝旧版本复核 | `app/review/store.py` | `tests/test_review.py::test_review_optimistic_lock` |
+| TRAP-31 | 已签发读数按记录键冻结，换版不改写 | `app/modules/release.py` | `tests/test_release.py::test_issued_reading_is_frozen_when_baseline_changes` |
+| TRAP-32 | 晚到同步数据只作用于未发布范围 | `app/modules/release.py` | `tests/test_release.py::test_unreleased_scope_uses_new_baseline` |
+| TRAP-33 | 受影响范围不闭合阻断整版 | `app/review/service.py` | `tests/test_release.py::test_unclosed_affected_scope_blocks_whole_version` |
+| TRAP-34 | 同记录键来源变化显式拦下 | `app/modules/release.py` | `tests/test_release.py::test_changed_issued_source_is_blocked` |
+| TRAP-35 | 版本切换失败保留旧版与旧数据 | `app/review/store.py` | `tests/test_release.py::test_failed_switch_keeps_old_version_and_data` |
+| TRAP-36 | 已签发批次快照不随后续换版改写 | `app/review/service.py` | `tests/test_release.py::test_approved_batch_snapshot_never_rewritten` |
 
 ## 领域反例
 

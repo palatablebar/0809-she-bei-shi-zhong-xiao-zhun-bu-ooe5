@@ -20,6 +20,18 @@
   {% endfor %}
 </div>
 {% endmacro %}
+{% macro baseline() %}
+<section class="panel baseline" aria-labelledby="baseline-title">
+  <div class="panel-head"><h2 id="baseline-title">校准版本</h2><span id="baseline-state" aria-live="polite">—</span></div>
+  <dl class="baseline-list">
+    <div><dt>本版版本</dt><dd id="cal-version">—</dd></div>
+    <div><dt>生效版本</dt><dd id="cal-previous">—</dd></div>
+    <div><dt>受影响组</dt><dd id="cal-affected">—</dd></div>
+  </dl>
+  <h3>本次变化的读数</h3>
+  <div class="scroll"><table id="changes" aria-label="本次版本变化的读数"></table></div>
+</section>
+{% endmacro %}
 {% macro results() %}
 <section class="panel results" aria-labelledby="panel-title">
   <div class="panel-head"><h2 id="panel-title">运行对账</h2><span id="counts"></span></div>

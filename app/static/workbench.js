@@ -33,7 +33,7 @@ function draw() {
   detail.hidden = !batch;
   if (batch) {
     document.querySelector('#run-status').textContent = `${batch.id.slice(0,10)} · ${batch.status} · r${batch.revision}`;
-    detail.querySelector('[value="APPROVED"]').disabled = !report.balance.releasable || batch.status==='APPROVED';
+    detail.querySelector('[value="APPROVED"]').disabled = !report.balance.releasable || report.calibration?.releasable === false || batch.status==='APPROVED';
     detail.querySelector('[value="HELD"]').disabled = batch.status==='APPROVED';
     evidence.href = `/api/runs/${batch.id}/evidence`;
   }
